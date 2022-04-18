@@ -6,43 +6,64 @@ let snake = {
     spwanSnake: function() {
         this.pieces = [];
     },
-    growSnake: function() {
+    spwan: function() {
         let newPiece = new component(
             0,
             this.pieceWidth,
             this.pieceHeight,
             2,
             "#253034",
-            "red",
-            0,
-            0,
-        );
-        let newPiece2 = new component(
-            0,
-            this.pieceWidth,
-            this.pieceHeight,
-            2,
-            "#253034",
             "#41b73f",
-            this.pieceWidth,
             0,
+            0,
+            true
         );
-        let newPiece3 = new component(
-            0,
-            this.pieceWidth,
-            this.pieceHeight,
-            2,
-            "#253034",
-            "#41b73f",
-            this.pieceWidth * 2,
-            0,
-        );
+
         this.pieces.push(newPiece);
-        this.pieces.push(newPiece2);
-        this.pieces.push(newPiece3);
         listComponents.push(newPiece);
-        listComponents.push(newPiece2);
-        listComponents.push(newPiece3);
+    },
+    grow: function() {
+        const lastPiece = this.pieces[this.pieces.length - 1];
+
+        let column = 0;
+        let row = 0;
+
+        switch (this.direction) {
+            case DIRECTION.LEFT:
+                column = lastPiece.x + 1;
+                row = lastPiece.y;
+                break;
+            
+            case DIRECTION.TOP:
+                column = lastPiece.x;
+                row = lastPiece.y + 1;
+                break;
+
+            case DIRECTION.RIGHT:
+                column = lastPiece.x - 1;
+                row = lastPiece.y;
+                break;
+
+            case DIRECTION.BOTTOM:
+                column = lastPiece.x;
+                row = lastPiece.y - 1;
+                break;
+        }
+
+        let newPiece = new component(
+            0,
+            this.pieceWidth,
+            this.pieceHeight,
+            2,
+            "#253034",
+            "#41b73f",
+            column,
+            row,
+            true
+        );
+
+        this.pieces.push(newPiece);
+        listComponents.push(newPiece);
     },
     collide: function(piece, direction) {
         let isCollide = false;
@@ -95,14 +116,25 @@ let snake = {
         if (!isCollide) {
             // check if the actual piece will collide another piece.
             for (let idxPiece = 0; idxPiece < this.pieces.length; idxPiece++) {
-                
+
+            }
+
+            // check if the snake will collide with food.
+            for (let index = 0; index < listComponents.length; index++) {
+                const component = listComponents[index];
+                if (component.id === COMPONENT_ID.FOOD_COMPONENT) {
+                    if (this.pieces[0].x === component.x && this.pieces[0].y === component.y) {
+                        this.grow();
+                        food.spwan();
+                    }
+                }
             }
         }
 
         return isCollide;
     },
     move: function() {
-        const lastPieceIndex = this.pieces.length - 1;
+        const lastPieceIndex = 0;
         let previousX = this.pieces[lastPieceIndex].x;
         let previousY = this.pieces[lastPieceIndex].y;
         
@@ -128,7 +160,7 @@ let snake = {
             }
             
             // Starting at index 1 because index 0 is already defined.
-            for (let index = lastPieceIndex -1; index >= 0; index--) {
+            for (let index = 1; index < this.pieces.length; index++) {
                 const x = this.pieces[index].x;
                 const y = this.pieces[index].y;
     

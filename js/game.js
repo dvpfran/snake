@@ -1,10 +1,11 @@
 function startGame() {
     area.start();
-    snake.growSnake();
+    food.spwan();
+    snake.spwan();
 
     setInterval(() => {
         snake.move();
-    }, 500);
+    }, 300);
 
     addEventHandlers();
 }

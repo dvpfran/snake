@@ -1,8 +1,7 @@
 let listComponents = [];
-let indexComponent = 0;
 
-function component(index, width, height, lineWidth, lineColor, color, x, y, text = "", removable = true) {
-    this.index = index;
+function component(id, width, height, lineWidth, lineColor, color, x, y, canCollide = false, text = "", removable = true) {
+    this.id = id;
     this.width = width;
     this.height = height;
     this.color = color;
@@ -12,6 +11,7 @@ function component(index, width, height, lineWidth, lineColor, color, x, y, text
     this.speedY = 0;
     this.text = text;
     this.removable = removable;
+    this.canCollide = canCollide;
 
     this.updCtx = function() {
         ctx = area.context;

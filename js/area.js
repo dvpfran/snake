@@ -37,12 +37,12 @@ const area = {
                         this.grid.backColor, 
                         setColumnPosition(idxColumn, this.grid.columnWidth), 
                         setRowPosition(idxRow, this.grid.columnHeight), 
+                        false,
                         "", 
-                        false
                     )
                 );  
             }
-            this.grid.gridPositions.push(columnPositions);
+            //this.grid.gridPositions.push(columnPositions);
         }
     },
     start: function() {

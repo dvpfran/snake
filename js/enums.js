@@ -14,3 +14,7 @@ const DIRECTION = {
     RIGHT: 2,
     BOTTOM: 3
 };
+
+const COMPONENT_ID = {
+    FOOD_COMPONENT: 'FOOD_COMPONENT'
+};
